@@ -55,11 +55,11 @@ public class Play extends  JPanel implements KeyListener , Runnable{
 	 int pX[][],pY[][],temp=50,temp1=50,ok[][];
 	 int b=0;
 	 float p=32,o=30,velx=0,vely=0,x1=35,y1=30,x1_old=35,y1_old=30,length=50,width=50,p1=100,o1=50,x_red=850,y_red=400,velx_ghost=0,vely_ghost=0;
-	 int count=0,Score=0;
-	 int flag=1,flag3,flag4,flag5,flag6,flag7,flag8=0,flagtouch=0 ;
+	 int count=0;
+	 int flag=1,flag3,flag4,flag5,flag6,flag7,flag8=0 ;
 	 int k=100;
 	 int j,i;
-	  
+	  private int Score=0,bonus=20,bonus2=20 , bonus3=20,bonus4=20,bonus5=20,points;
 	 public BufferedImage points1;
 	//int a,b,length,width;
  	ScrollPane scrollLeft = new ScrollPane();
@@ -94,7 +94,7 @@ public class Play extends  JPanel implements KeyListener , Runnable{
 	private ImageObserver observer;
 	Ghost ghost[] = new Ghost[5];
 
-	
+	 
 	@Override
 	public void paintComponent(Graphics g)
 	{
@@ -124,42 +124,44 @@ public class Play extends  JPanel implements KeyListener , Runnable{
 			for(int i=0;i<10;i++){
 				for(int j=0;j<10;j++){
 					if(ok[i][j]==0){
-							g2.drawImage(points1,(int)pX[i][j], (int)pY[i][j],(int)20,(int) 20, this);
-						
-						
-							// g2.draw(points_getBounds((int)pX[i][j], (int)pY[i][j],(int)20,(int) 20));
-					}
-				
+							  g2.drawImage(points1,(int)pX[i][j], (int)pY[i][j],(int)20,(int) 20, this);
+							  g2.draw(points_getBounds((int)pX[i][j], (int)pY[i][j],(int)20,(int) 20));
+					} 
+					
 				}
-			}
-			
+			}  	
+		 
+ 				/*	red rectangle emojy */
 			g2.setColor(Color.red);
-			//g2.draw(player_getBounds());
+	        g2.draw(player_getBounds());
 				if(flag3==0){	
 					g2.drawImage(pont.pointsblue,(int)920 , (int)30,(int)40,(int) 40, this);
-					//g2.draw(points_getBound1((int)920, (int)30,(int)40,(int) 40));
-				}
-			else if(flagtouch<20)
-			{
-					flagtouch=+20;
-					System.out.println(flagtouch);
+				//	g2.draw(points_getBound1((int)920, (int)30,(int)40,(int) 40));
+ 				
 				}
 				if(flag4==0){
 					g2.drawImage(pont1.pointsblue1,(int)920 , (int)680,(int)40,(int) 40, this);
-					}
+				//	g2.draw( points_getBound1((int)920 , (int)680,(int)40,(int) 40));
+				
+				}
 			
 				if(flag5==0){
 					g2.drawImage(pont2.pointsblue2,(int)40 , (int)680,(int)40,(int) 40, this);
+					g2.draw( points_getBound1((int)40  , (int)680,(int)40,(int) 40));
+			
 				}
 				
 				if(flag6==0){
 					g2.drawImage(pont3.pointsblue3,(int)530 , (int)30,(int)40,(int) 40, this);
+					 	g2.draw( points_getBound1((int)530  , (int)30,(int)40,(int) 40));
+
 				}
 				
 				if(flag7==0){
 					g2.drawImage(pont4.pointsblue4,(int)530 , (int)680,(int)40,(int) 40, this);
-				}
-				
+ 
+				}			
+				 
 			
 				g2.drawImage(pontred1.pointsred1,(int)880 , (int)350,(int)40,(int) 40, this);
 				g2.drawImage(pontred2.pointsred2,(int)80 , (int)350,(int)40,(int) 40, this);
@@ -170,7 +172,8 @@ public class Play extends  JPanel implements KeyListener , Runnable{
 				g2.drawImage(img1, ghost[1].getX(), ghost[1].getY(),50,50, this);
 				g2.drawImage(img2, ghost[2].getX(), ghost[2].getY(),50,50, this);
 				g2.drawImage(img3, ghost[3].getX(), ghost[3].getY(),50,50, this);
-
+				g2.setFont(new Font("David",Font.BOLD,24));
+				g2.drawString("Score: "+Score, 50, 780);
 		p += velx;
 		o += vely;
 		x1_old=x1;
@@ -448,47 +451,81 @@ public class Play extends  JPanel implements KeyListener , Runnable{
 	public Rectangle ghost_red(){
 		return new Rectangle((int)ghost[0].getX(),(int)ghost[0].getY(),(int)50,(int)50);
 	}
-
+	 
 	public void stop(){
-//touch pacman with yellow circle
-		float Score = 0,q=10;
-		for(int i=0;i<10;i++){
+for(int i=0;i<10;i++){
 			for(int j=0;j<10;j++){
-			 
 				if(player_getBounds().intersects(points_getBounds((int)pX[i][j], (int)pY[i][j],(int)20,(int) 20)))
-					 ok[i][j]=1; 
-   			     
-				
+				{
+				ok[i][j]=1;
+			  
+
+ 				}
+				 if(ok[i][j]==0)
+  				{
+ 					 points=0;
+				 Score+=points;
+ 				}else {
+ 					
+ 				}
  	            }
 	            }
-	
- 		//bounos
-		if(player_getBounds().intersects(points_getBound1((int)940, (int)30,(int)20,(int) 20))){
+ 
+		 
+ 		//bounosfor(int t=0;t<1;t++)
+		
+		 if(player_getBounds().intersects(points_getBound1((int)940, (int)30,(int)20,(int) 20))){
+			Score+=bonus ;
 			
-			flag3=1;
-		
-		
-		}
-		if(player_getBounds().intersects(points_getBound2((int)940, (int)680,(int)20,(int) 20))){
+	          flag3=1;
+	        
+
+   		     } 
+		 if (flag3==1)
+          {
+	         bonus=0;
+	       }
+ 		if(player_getBounds().intersects(points_getBound2((int)940, (int)680,(int)20,(int) 20))){
 			
 			flag4=1;
-		 
-		}
+ Score+=bonus2;
+		} 
+ 		if(flag4==1) {
+ 			bonus2=0;
+ 		}
 		if(player_getBounds().intersects(points_getBound3((int)35, (int)680,(int)20,(int) 20))){
-			
+		 
+			Score+=bonus3;
 			flag5=1;
-			
+			 
+   		} 
+		  if (flag5==1)
+   		{
+   			bonus3= 0;
+ 
 		}
+		  
 		if(player_getBounds().intersects(points_getBound4((int)540, (int)50,(int)20,(int) 20))){
 			
 			flag6=1;
-			
-		}
+			Score+=bonus4;
+ 		}
+		  if (flag6==1)
+	   		{
+	   			bonus4= 0;
+	 
+			}
 		if(player_getBounds().intersects(points_getBound4((int)540, (int)680,(int)20,(int) 20))){
 			
 			flag7=1;
-		
+			Score+=bonus5;
 		 		}
+		  if (flag7==1)
+	   		{
+	   			bonus5= 0;
+	 
+			}
+		  
 		//with red ghost
 	if(player_getBounds().intersects( ghost_red())){
 			
@@ -1178,8 +1215,11 @@ public class Play extends  JPanel implements KeyListener , Runnable{
 					vely=0;
 					o=(float) (scrollDownLeft.getBounds().getY()+scrollDownLeft.getBounds().getHeight());
 				}
-			}
+			}   				 
+ 
 	}
+	 
+	  
 	@Override  
 	public void keyPressed(KeyEvent e) {
 		
@@ -1261,17 +1301,11 @@ public class Play extends  JPanel implements KeyListener , Runnable{
 		
 		}
 			if(((int)p <= (50-15) || ((int)p >= (50+54) && (int)p >= 880 ))&& ((int)o <= (350-34) || (int)o >= (350+46)))
-			{				//int Score=0;
- 			//	System.out.println("abedr77");
+			{			 
 				isStop = false;
-				//if(isStop==false) {
-			//	Score+=10;
-			 // 	System.out.println(Score);
-				//}
 			}
 			if( (((int)p <= (880-26) && (int)p >= 50+54) || (int)p >= (880+26)) &&  ((int)o <= (350-24) || (int)o >= (350+46)))
 			{
-				//System.out.println("ameer88");
 				isStop = false;
 			}
 	} 
@@ -1280,21 +1314,23 @@ public class Play extends  JPanel implements KeyListener , Runnable{
 		// TODO Auto-generated method stub
 		
 	}
+ 
 	@Override
-	public void run() {
- 		while(end == false)
-		{
+	 public void run() {
+ 		 while(end == false)
+		 {
 			//synchronized(this)
 			System.out.flush();
 			{
 			if(play_b==true)
 			{
-				stop();	
+ 				stop();	
+ 			}
 			}
-			}
-		}
+		 }
 	}
-}
+	
+ }
 
 
 
